@@ -5,4 +5,6 @@
 
 ### Brief Introduction
 This project will compare the differences and similarities between
-transportation services. Specifically, Uber and Lyft. The comparison will be used to display user preference. In addition to aid individuals in a choice between the two.
+transportation services. Specifically Uber and Lyft against taxis.
+The comparison will be used to display user preference. In addition
+to aid individuals in a choice between the two.
