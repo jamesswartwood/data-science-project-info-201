@@ -6,8 +6,15 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+library(leaflet)
 library(shiny)
+library(shinythemes)
+
+weather_df <-
+    read.csv(
+        "/Users/jayrg007/Desktop/INFO201/data-science-project-info-201/data/weather.csv",
+             stringsAsFactors = FALSE)
+
 page_one <- tabPanel(
     "Intro",
     titlePanel("Intro"),
@@ -18,7 +25,7 @@ page_one <- tabPanel(
 )
 
 page_two <- tabPanel(
-    "Background and Research Quesstions",
+    "Background and Research Questions",
     titlePanel("Background and Research Questions"),
     
         mainPanel(
@@ -32,9 +39,15 @@ page_three <- tabPanel(
     
     sidebarLayout(
         sidebarPanel(
-            p("Controls for the viz will go here")
+            sliderInput(
+                "temp",
+                label = h3("Select Temperature Range"),
+                min = 0,
+                max = 100,
+                value = c(50, 70))
         ),
         mainPanel(
+            textOutput("temp"),
             p("Vizualisations will go here")
         )
     )
@@ -80,7 +93,10 @@ ui  <- navbarPage(
 )
 
 server <- function(input, output) {
-
+    test_output <- reactive({
+        paste0("You chose ", input$temp)
+    })
+    output$test <- renderPrint({test_output})
 
 }
 
