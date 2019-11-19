@@ -10,33 +10,46 @@ library(leaflet)
 library(shiny)
 library(shinythemes)
 
-weather_df <-
-    read.csv(
-        "/Users/jayrg007/Desktop/INFO201/data-science-project-info-201/data/weather.csv",
-             stringsAsFactors = FALSE)
+weather_df <- read.csv("./data/weather.csv", stringsAsFactors = FALSE)
+
+co2_df <- read.csv("./data/CO2_data.csv", stringsAsFactors = FALSE)
 
 page_one <- tabPanel(
     "Intro",
-    titlePanel("Intro"),
-    
+    titlePanel("Introduction"),
         mainPanel(
-            p("Intro paragraph here")
+            h4("The University of Washington"),
+            h4("The Information School"),
+            h4("INFO 201"),
+            tags$li("Jeffrey Luu"),
+            tags$li("James Swartwood"),
+            tags$li("Donald Lee"),
+            tags$li("Jayr Gudino"),
+            h4("This project will give us insights on which countries
+            are producing the most CO2 and will show how this affects
+            the temperatures in
+            the given contries.")
         )
 )
 
 page_two <- tabPanel(
     "Background and Research Questions",
     titlePanel("Background and Research Questions"),
-    
         mainPanel(
-            p("Information here")
+            h5("Some background: Global Warming is a serious issue and it
+               requires our immeditate attention because there are several things
+               being affected because of it. Such as the greenhouse effect,
+               causing ice caps to melt, and thus, rainsing sea levels."),
+            p(h5("Our questions for this project are:")),
+            tags$li("Has global warming become more apparent in recent years?"),
+            tags$li("Is global Warming a natural phenomenon or due to
+                    human advancement?")
         )
 )
 
 page_three <- tabPanel(
     "Vizualisations",
     titlePanel("Vizualisations"),
-    
     sidebarLayout(
         sidebarPanel(
             sliderInput(
@@ -44,10 +57,10 @@ page_three <- tabPanel(
                 label = h3("Select Temperature Range"),
                 min = 0,
                 max = 100,
-                value = c(50, 70))
+                value = c(30, 70))
         ),
         mainPanel(
-            textOutput("temp"),
+            textOutput("test"),
             p("Vizualisations will go here")
         )
     )
@@ -67,21 +80,29 @@ page_five <- tabPanel(
     titlePanel("About the tech"),
     
     mainPanel(
-        p("Info about the tech will go here")
+        p("For this project, we used R to wrangle all of our data, and
+          Shiny to create this app and all the vizualisations."),
+        tags$a(
+            href="https://github.com/jamesswartwood/
+                  data-science-project-info-201/wiki"
+                , "Technical Report")
     )
 )
 
 page_six <- tabPanel(
     "About us",
     titlePanel("About us"),
-    
     mainPanel(
-        p("Info about us will go here")
+        tags$li("Jeffrey Luu:"),
+        tags$li("James Swartwood:"),
+        tags$li("Donald Lee"),
+        tags$li("Jayr Gudino:")
     )
 )
 
 ui  <- navbarPage(
     "Global Warming",
+    theme = shinytheme("superhero"),
             page_one,
             page_two,
             page_three,
@@ -89,14 +110,15 @@ ui  <- navbarPage(
             page_five,
             page_six
         
-    
-)
-
+    )
 server <- function(input, output) {
     test_output <- reactive({
-        paste0("You chose ", input$temp)
+        paste0("You chose", input$temp)
     })
-    output$test <- renderPrint({test_output})
+    
+    output$test <- renderText({
+        test_output()
+    })
 
 }
 

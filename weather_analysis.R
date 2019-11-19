@@ -1,6 +1,10 @@
 weather_df <-
-  read.csv("/Users/jayrg007/Desktop/INFO201/data-science-project-info-201/data/weather.csv",
-           stringsAsFactors = FALSE)
+  read.csv("./data/weather.csv", stringsAsFactors = FALSE)
+
+co2_df <-
+  read.csv("./data/CO2_data.csv")
+
+View(co2_df)
 
 show_by_given_temp <- function(temperature) {
   a <- weather_df %>%
