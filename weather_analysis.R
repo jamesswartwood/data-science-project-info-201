@@ -5,6 +5,10 @@ addX <- function(string) {
   return(paste("X", string, sep = ""))
 }
 
+removeX <- function(string) {
+  return(gsub("X", "", string))
+}
+
 weather_df <- read.csv("data/weather.csv", stringsAsFactors = FALSE)
 weather_df <- weather_df %>%
   mutate(Year = weather_df$dt) %>%
@@ -26,3 +30,4 @@ CO2_df <- CO2_df %>%
 
 df <- weather_df %>%
   inner_join(CO2_df, by = c("Country", "Year"))
+df$Year <- lapply(df$Year, removeX)
