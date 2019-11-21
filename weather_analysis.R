@@ -1,5 +1,6 @@
 library(dplyr)
 library(tidyr)
+library(knitr)
 
 addX <- function(string) {
   return(paste("X", string, sep = ""))

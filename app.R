@@ -10,9 +10,7 @@ library(leaflet)
 library(shiny)
 library(shinythemes)
 
-weather_df <- read.csv("./data/weather.csv", stringsAsFactors = FALSE)
-
-co2_df <- read.csv("./data/CO2_data.csv", stringsAsFactors = FALSE)
+source("weather_analysis.R")
 
 page_one <- tabPanel(
     "Intro",
@@ -55,12 +53,12 @@ page_three <- tabPanel(
             sliderInput(
                 "temp",
                 label = h3("Select Temperature Range"),
-                min = 0,
-                max = 100,
-                value = c(30, 70))
+                min = -25,
+                max = 35,
+                value = c(-25, 35))
         ),
         mainPanel(
-            textOutput("test"),
+            textOutput("table"),
             p("Vizualisations will go here")
         )
     )
@@ -112,12 +110,15 @@ ui  <- navbarPage(
         
     )
 server <- function(input, output) {
-    test_output <- reactive({
-        paste0("You chose", input$temp)
+    table_output <- reactive({
+        table <- df %>%
+            filter(AverageTemp >= temp$min) %>%
+            filter(AverageTemp <= temp$max) %>%
+            kable()
     })
     
-    output$test <- renderText({
-        test_output()
+    output$table <- renderText({
+        table_output()
     })
 
 }
