@@ -1,7 +1,7 @@
 # Data-Science-Project-INFO-201
 
 ### INFO-201: Data Science Project
-[Project Proposal](https://github.com/jamesswartwood/data-science-project-info-201/wiki)
+[Technical Report](https://github.com/jamesswartwood/data-science-project-info-201/wiki)
 
 ### Brief Introduction
 This project tackle the current global warming problem. By comparing what
