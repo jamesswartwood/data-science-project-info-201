@@ -24,11 +24,14 @@ weather_df <- weather_df %>%
 
 CO2_df <- read.csv("data/CO2_data.csv", stringsAsFactors = FALSE)
 CO2_df <- CO2_df %>%
-  mutate(Country = CO2_df$ï..Country.Name) %>%
+  mutate(Country = CO2_df$Country.Name) %>%
   gather(key = Year, value = CO2, X1960:X) %>%
   select(Year, Country, CO2) %>%
   filter(!is.na(CO2))
 
-df <- weather_df %>%
+final_weather_df <- weather_df %>%
   inner_join(CO2_df, by = c("Country", "Year"))
-df$Year <- lapply(df$Year, removeX)
+final_weather_df$Year <- lapply(final_weather_df$Year, removeX)
+final_weather_df <- as.data.frame(final_weather_df)
+
+temp_plot <- ggplot

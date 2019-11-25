@@ -6,6 +6,7 @@
 #
 #    http://shiny.rstudio.com/
 #
+library(DT)
 library(leaflet)
 library(shiny)
 library(shinythemes)
@@ -50,16 +51,21 @@ page_three <- tabPanel(
     titlePanel("Vizualisations"),
     sidebarLayout(
         sidebarPanel(
-            sliderInput(
-                "temp",
-                label = h3("Select Temperature Range"),
-                min = -25,
-                max = 35,
-                value = c(-25, 35))
+            textInput(
+                "year_input",
+                label = h3("Type a year from 1970-2013"),
+                value = "1970"
+            ),
+            textInput(
+                "country",
+                label = h3("Type a country"),
+                value = "United States"
+            )
         ),
         mainPanel(
-            textOutput("table"),
-            p("Vizualisations will go here")
+            DT::dataTableOutput("table"),
+            DT::dataTableOutput("country_table"),
+            plotOutput("temperature_plot")
         )
     )
 )
@@ -100,7 +106,7 @@ page_six <- tabPanel(
 
 ui  <- navbarPage(
     "Global Warming",
-    theme = shinytheme("superhero"),
+    theme = shinytheme("cerulean"),
             page_one,
             page_two,
             page_three,
@@ -110,15 +116,38 @@ ui  <- navbarPage(
         
     )
 server <- function(input, output) {
-    table_output <- reactive({
-        table <- df %>%
-            filter(AverageTemp >= temp$min) %>%
-            filter(AverageTemp <= temp$max) %>%
-            kable()
+    weather_table_output <- reactive({
+        weather_table <- final_weather_df %>%
+            filter(Year == input$year_input)
+        weather_table
     })
     
-    output$table <- renderText({
-        table_output()
+    country_table_output <- reactive({
+        output_table <- final_weather_df %>%
+            filter(Country == input$country) %>%
+            filter(Year == input$year_input)
+        output_table
+    })
+    
+    weather_plot <- reactive({
+        temp_table <- final_weather_df %>%
+            filter(Country == input$country)
+        temp_plot <- ggplot(temp_table,
+                            aes(x = as.numeric(Year), y = AverageTemp))+
+            geom_col(aes(fill = AverageTemp), width = 2.0)+
+            xlab("Year")+
+            ggtitle(paste0("Temperature vs. Years for ", input$country))
+        temp_plot
+    })
+    output$table <- DT::renderDataTable({
+        weather_table_output()
+    })
+    output$country_table <- DT::renderDataTable({
+        country_table_output()
+    })
+    
+    output$temperature_plot <- renderPlot({
+        weather_plot()
     })
 
 }
