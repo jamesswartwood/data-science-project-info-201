@@ -6,10 +6,13 @@
 #
 #    http://shiny.rstudio.com/
 #
-library(DT)
-library(leaflet)
-library(shiny)
-library(shinythemes)
+library(DT, warn.conflicts = FALSE)
+library(leaflet, warn.conflicts = FALSE)
+library(shiny, warn.conflicts = FALSE)
+library(shinythemes, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(ggplot2)
+
 
 source("weather_analysis.R")
 
