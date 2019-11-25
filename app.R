@@ -49,29 +49,7 @@ page_two <- tabPanel(
         )
 )
 
-page_three <- tabPanel(
-    "Vizualisations",
-    titlePanel("Vizualisations"),
-    sidebarLayout(
-        sidebarPanel(
-            textInput(
-                "year_input",
-                label = h3("Type a year from 1970-2013"),
-                value = "1970"
-            ),
-            textInput(
-                "country",
-                label = h3("Type a country"),
-                value = "United States"
-            )
-        ),
-        mainPanel(
-            DT::dataTableOutput("table"),
-            DT::dataTableOutput("country_table"),
-            plotOutput("temperature_plot")
-        )
-    )
-)
+
 
 page_four <- tabPanel(
     "Conclusion",
@@ -106,13 +84,78 @@ page_six <- tabPanel(
         tags$li("Jayr Gudino:")
     )
 )
+Viz1 <- tabPanel(
+    "Data Table 1",
+    titlePanel(
+        "Data Table 1"
+    ),
+    sidebarLayout(
+        sidebarPanel(
+            textInput(
+                "year_input",
+                label = h3("Type a year from 1970-2013"),
+                value = "1970"
+            )
+        ),
+        mainPanel(
+            DT::dataTableOutput("table")
+        )
+    )
+)
 
+Viz2 <- tabPanel(
+    "Data Table 2",
+    titlePanel(
+        "Data Table 2"
+    ),
+    sidebarLayout(
+        sidebarPanel(
+            textInput(
+                "year_input_viz2",
+                label = h3("Type a year from 1970-2013"),
+                value = "1970"
+            ),
+            textInput(
+                "country",
+                label = h3("Type a country"),
+                value = "United States"
+            )
+        ),
+        mainPanel(
+            DT::dataTableOutput("country_table")
+        )
+    )
+)
+
+Viz3 <- tabPanel(
+    "Plot",
+    titlePanel(
+        "Plot"
+    ),
+    sidebarLayout(
+        sidebarPanel(
+            textInput(
+                "country_viz3",
+                label = h3("Type a country"),
+                value = "United States"
+            )
+        ),
+        mainPanel(
+            plotOutput("temperature_plot")
+        )
+    )
+)
 ui  <- navbarPage(
     "Global Warming",
     theme = shinytheme("cerulean"),
             page_one,
             page_two,
-            page_three,
+    navbarMenu(
+        "Vizualisations",
+        Viz1,
+        Viz2,
+        Viz3
+    ),
             page_four,
             page_five,
             page_six
@@ -128,18 +171,20 @@ server <- function(input, output) {
     country_table_output <- reactive({
         output_table <- final_weather_df %>%
             filter(Country == input$country) %>%
-            filter(Year == input$year_input)
+            filter(Year == input$year_input_viz2)
         output_table
     })
     
     weather_plot <- reactive({
         temp_table <- final_weather_df %>%
-            filter(Country == input$country)
+            filter(Country == input$country_viz3)
         temp_plot <- ggplot(temp_table,
                             aes(x = as.numeric(Year), y = AverageTemp))+
             geom_col(aes(fill = AverageTemp), width = 2.0)+
             xlab("Year")+
-            ggtitle(paste0("Temperature vs. Years for ", input$country))
+            ggtitle(paste0("Temperature vs. Years for ", input$country_viz3))+
+            coord_flip()
+        
         temp_plot
     })
     output$table <- DT::renderDataTable({
