@@ -101,10 +101,10 @@ page_six <- tabPanel(
   "About us",
   titlePanel("About us"),
   mainPanel(
-    tags$li("Jeffrey Luu:"),
+    tags$li("Jeffrey Luu: Freshman from Renton, WA. Undeclared Major."),
     tags$li("James Swartwood:"),
     tags$li("Donald Lee"),
-    tags$li("Jayr Gudino: Freshman from Quincy WA.")
+    tags$li("Jayr Gudino: Freshman from Quincy, WA.")
   )
 )
 Viz1 <- tabPanel(
