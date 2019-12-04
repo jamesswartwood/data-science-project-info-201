@@ -162,11 +162,13 @@ Viz3 <- tabPanel(
       textInput(
         "country_viz3",
         label = h3("Type a country"),
-        value = "United States"
+        value = "India"
       )
     ),
     mainPanel(
-      plotOutput("temperature_plot")
+      plotOutput("temperature_plot"),
+      p("This plot is showing us how the average temperatures are
+      increasing as the years go by for a specific country.")
     )
   )
 )
@@ -206,7 +208,7 @@ server <- function(input, output) {
       temp_table,
       aes(x = as.numeric(Year), y = AverageTemp)
     ) +
-      geom_col(aes(fill = AverageTemp), width = 2.0) +
+      geom_col(aes(fill = CO2), width = 2.0) +
       xlab("Year") +
       ggtitle(paste0("Temperature vs. Years for ", input$country_viz3)) +
       coord_flip()
