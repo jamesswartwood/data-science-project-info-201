@@ -168,7 +168,8 @@ Viz3 <- tabPanel(
     mainPanel(
       plotOutput("temperature_plot"),
       h3("This plot is showing us how the average temperatures are
-      increasing as the years go by for a specific country.")
+      increasing because of an increase in CO2 emissions as the 
+         years go by for a specific country.")
     )
   )
 )
