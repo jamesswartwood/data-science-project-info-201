@@ -102,9 +102,11 @@ page_six <- tabPanel(
   titlePanel("About us"),
   mainPanel(
     tags$li("Jeffrey Luu: Freshman from Renton, WA. Undeclared Major."),
-    tags$li("James Swartwood: Freshman from Seattle, WA. Computer Science Major in the Paul G. Allen School of Computer Science and Engineering. Software Engineering Intern at Fresh Consulting."),
+    tags$li("James Swartwood: Freshman from Seattle, WA. Computer Science
+            Major in the Paul G. Allen School of Computer Science and
+            Engineering. Software Engineering Intern at Fresh Consulting."),
     tags$li("Donald Lee: Freshman from Hong Kong. Undeclared Major."),
-    tags$li("Jayr Gudino: Freshman from Quincy, WA.")
+    tags$li("Jayr Gudino: Freshman from Quincy, WA. Undeclared Major.")
   )
 )
 Viz1 <- tabPanel(
